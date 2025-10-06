@@ -25,13 +25,21 @@ public class Jogo extends JFrame{
         add(telaJogo);
     }
     private void importImg() {
-    InputStream is = getClass().getResourceAsStream("/Sprites_do_jogo_Larissa.png");
     try {
-        img = ImageIO.read(is);
+        InputStream is = getClass().getResourceAsStream("/Sprites_do_jogo_Larissa.png");
+        if (is != null) {
+            img = ImageIO.read(is);
+            return;
+        }
+        java.io.File file = new java.io.File("src/main/resources/Sprites_do_jogo_Larissa.png");
+        if (file.exists()) {
+            img = ImageIO.read(file);
+        }
     } catch (IOException e) {
         e.printStackTrace();
     }
 }
+
 public static void main(String[] args) {
     Jogo jogo = new Jogo();
 
