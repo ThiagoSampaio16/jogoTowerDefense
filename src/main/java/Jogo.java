@@ -7,7 +7,7 @@ public class Jogo extends JFrame{
     private TelaJogo telaJogo;
 
     public Jogo(){
-        setSize(400, 400);
+        setSize(640, 640);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
