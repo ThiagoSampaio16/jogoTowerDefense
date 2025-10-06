@@ -2,6 +2,7 @@ package main.java;
 
 import javax.swing.JPanel;
 
+import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
@@ -9,8 +10,10 @@ import java.util.Random;
 public class TelaJogo extends JPanel {
 
     private Random random;
+    private BufferedImage img;
 
-    public TelaJogo(){
+    public TelaJogo(BufferedImage img){
+        this.img = img;
         random = new Random();
 
 
@@ -19,13 +22,14 @@ public class TelaJogo extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
-        for(int y = 0; y < 20; y++){
+        g.drawImage(img, 0, 0, null);
+        /* for(int y = 0; y < 20; y++){
             for (int x = 0; x < 20; x++){
 
                 g.setColor(getRndColor());
                 g.fillRect(x*32, y*32, 32, 32);
             }
-        }
+        } */
         
 
     }

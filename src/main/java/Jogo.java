@@ -16,12 +16,12 @@ public class Jogo extends JFrame{
 
         importImg();
 
-        setSize(640, 640);
+        setSize(655, 679);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        telaJogo = new TelaJogo();
+        telaJogo = new TelaJogo(img);
         add(telaJogo);
     }
     private void importImg() {
@@ -38,7 +38,7 @@ public class Jogo extends JFrame{
     } catch (IOException e) {
         e.printStackTrace();
     }
-}
+    }
 
 public static void main(String[] args) {
     Jogo jogo = new Jogo();
