@@ -2,10 +2,15 @@ package main.java;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+
+import inputs.MyMouseListener;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import inputs.KeyboardListner;
+
 
 public class Jogo extends JFrame implements Runnable {
 
@@ -22,18 +27,37 @@ public class Jogo extends JFrame implements Runnable {
 
     private Thread gamThread;
 
+    private MyMouseListener myMouseListener;
+    private KeyboardListner keyboardListner;
+
     public Jogo() {
         
         importImg();
 
         telaJogo = new TelaJogo(img);
+        
         add(telaJogo);
 
         setTitle("Jogo Tower Defense");
-        setSize(655, 679);
+        
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        
+        pack();
+        
         setVisible(true); // <- mover para o final!
+    }
+
+    private void initInputs() {
+        myMouseListener = new MyMouseListener();
+        keyboardListner = new KeyboardListner();
+        
+        this.addMouseListener(myMouseListener);
+        this.addMouseMotionListener(myMouseListener);
+        this.addKeyListener(keyboardListner);
+
+        requestFocus(); // <- Muito importante para o KeyListener funcionar!
+        
     }
 
     private void importImg() {
@@ -85,6 +109,7 @@ public class Jogo extends JFrame implements Runnable {
 
     public static void main(String[] args) {
         Jogo jogo = new Jogo();
+        jogo.initInputs();
         jogo.start();
 }
 
@@ -102,19 +127,22 @@ public class Jogo extends JFrame implements Runnable {
        
         int frames = 0;
         int updates = 0;
-        
+
+        long now;
 
         while (true){
-            if (System.nanoTime() - lastFrame >= timePerFrame) {
+            now = System.nanoTime();
+
+            if (now - lastFrame >= timePerFrame) {
                     repaint();
-                    lastFrame = System.nanoTime(); 
+                    lastFrame = now; 
                     frames++;
                 }
             
 
-            if (System.nanoTime() - lastUpdate >= timePerUpdate) {
+            if (now - lastUpdate >= timePerUpdate) {
                 updateGame();
-                lastUpdate = System.nanoTime();
+                lastUpdate = now;
                 updates++;
             }
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {

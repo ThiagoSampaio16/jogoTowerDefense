@@ -3,14 +3,18 @@ package main.java;
 import javax.swing.JPanel;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
+
 
 public class TelaJogo extends JPanel {
 
     private Random random;
     private BufferedImage img;
+
+    private Dimension size;
 
     private long lastTime = System.currentTimeMillis();
     private int frames = 0;
@@ -20,9 +24,20 @@ public class TelaJogo extends JPanel {
 
     public TelaJogo(BufferedImage img) {
         this.img = img;
+        
+        setPanelSize();
         loadSprites();  
         random = new Random();
         
+    }
+
+    private void setPanelSize() {
+        size = new Dimension(640, 640);
+        setMinimumSize(size);
+        setPreferredSize(size);
+        setMaximumSize(size);
+
+
     }
     
     private void loadSprites() {
