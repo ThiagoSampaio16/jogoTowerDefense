@@ -1,12 +1,8 @@
 package main.java;
 
 import javax.swing.JPanel;
-import java.awt.image.BufferedImage;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Random;
 
 
 public class TelaJogo extends JPanel {

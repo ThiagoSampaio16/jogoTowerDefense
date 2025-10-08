@@ -1,14 +1,9 @@
 package main.java;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import inputs.MyMouseListener;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import inputs.KeyboardListner;
 import scenes.Menu;
 import scenes.Playing;
@@ -39,11 +34,11 @@ public class Jogo extends JFrame implements Runnable {
 
     public Jogo() {
 
+        initClasses();
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
-        initClasses();
-        
+        setResizable(false);
         add(telaJogo);
         pack();
 
