@@ -1,0 +1,21 @@
+package scenes;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+import main.java.Jogo;
+
+public class Settings extends GameScene implements SceneMethods{
+
+    public Settings(Jogo jogo) {
+        super(jogo);
+
+    }
+
+    @Override
+    public void render(Graphics g) {
+        g.setColor(Color.BLUE);
+        g.fillRect(0, 0, 640, 640);
+    }
+
+}

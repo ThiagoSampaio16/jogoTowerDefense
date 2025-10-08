@@ -3,6 +3,9 @@ package inputs;
 
 import java.awt.event.KeyListener;
 
+import main.java.GameStates;   
+import static main.java.GameStates.*;
+
 public class KeyboardListner implements KeyListener {
 
     @Override
@@ -14,12 +17,16 @@ public class KeyboardListner implements KeyListener {
     public void keyPressed(java.awt.event.KeyEvent e) {
 
         if (e.getKeyCode() == java.awt.event.KeyEvent.VK_A) {
-            System.out.println("A foi pressionada");
+            GameStates.gameState = MENU;
             
         }
 
-        else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_B) {
-            System.out.println("B foi pressionada");
+        else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_S) {
+            GameStates.gameState = PLAYING;
+            
+        }
+        else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_D) {
+            GameStates.gameState = SETTINGS;
             
         }
     }

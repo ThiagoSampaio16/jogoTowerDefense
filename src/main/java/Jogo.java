@@ -10,13 +10,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import inputs.KeyboardListner;
-
+import scenes.Menu;
+import scenes.Playing;
+import scenes.Settings;
 
 public class Jogo extends JFrame implements Runnable {
 
     private TelaJogo telaJogo;
-    
-    private BufferedImage img;
     
     private final double FPS_SET = 120.0;
     private final double UPS_SET = 60.0;
@@ -30,22 +30,35 @@ public class Jogo extends JFrame implements Runnable {
     private MyMouseListener myMouseListener;
     private KeyboardListner keyboardListner;
 
-    public Jogo() {
-        
-        importImg();
+    
+    //Classes
+    private Render render;
+    private Menu menu;
+    private Playing playing;
+    private Settings settings;
 
-        telaJogo = new TelaJogo(img);
+    public Jogo() {
+
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        initClasses();
         
         add(telaJogo);
+        pack();
 
         setTitle("Jogo Tower Defense");
         
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        
-        pack();
-        
+ 
         setVisible(true); // <- mover para o final!
+    }
+    private void initClasses(){
+
+        render = new Render(this);
+        telaJogo = new TelaJogo(this);
+        menu = new Menu(this);
+        playing = new Playing(this);
+        settings = new Settings(this);
     }
 
     private void initInputs() {
@@ -58,29 +71,6 @@ public class Jogo extends JFrame implements Runnable {
 
         requestFocus(); // <- Muito importante para o KeyListener funcionar!
         
-    }
-
-    private void importImg() {
-        try {
-            // 1ª tentativa: dentro dos recursos do classpath
-            InputStream is = getClass().getResourceAsStream("/Sprites_do_jogo_Larissa.png");
-            if (is != null) {
-                img = ImageIO.read(is);
-                System.out.println("Imagem carregada do classpath!");
-                return;
-            }
-
-            // 2ª tentativa: caminho direto (VS Code)
-            File file = new File("src/main/resources/Sprites_do_jogo_Larissa.png");
-            if (file.exists()) {
-                img = ImageIO.read(file);
-                System.out.println("Imagem carregada do arquivo local!");
-            } else {
-                System.out.println("Imagem não encontrada!");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void start() {
@@ -153,5 +143,20 @@ public class Jogo extends JFrame implements Runnable {
             } 
         }
     }
+    //Getters and Setters
+    public Render getRender(){
+        return render;
     }
 
+    public Menu getMenu(){
+        return menu;
+    }
+
+    public Playing getPlaying(){
+        return playing;
+    }
+    
+    public Settings getSettings(){
+        return settings;
+    }
+}
