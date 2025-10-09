@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
 import main.java.Jogo;
 import ui.MyButton;
+import static main.java.GameStates.*;
 
 public class Menu extends GameScene implements SceneMethods{
 
@@ -30,7 +32,16 @@ public class Menu extends GameScene implements SceneMethods{
     }
 
     private void initButtons() {
-        bPlaying = new MyButton("Play", 300, 150, 200, 50);
+
+        int w = 150;
+        int h = w/3;
+        int x = 640/2 - w/2;
+        int y = 150;
+        int yOffset = 100;
+
+        bPlaying = new MyButton("Play", x, y, w, h);
+        bSettings = new MyButton("Settings", x, y + yOffset, w, h);
+        bQuit = new MyButton("Quit", x, y + yOffset*2, w, h);
     }
 
     @Override
@@ -76,5 +87,39 @@ public class Menu extends GameScene implements SceneMethods{
 
     private int getRndInt() {
         return random.nextInt(100);
+    }
+
+    @Override
+    public void mouseClicked(int x, int y) {
+        if (bPlaying.getBounds().contains(x, y)) {
+            SetGameState(PLAYING);
+            
+        }
+    }
+
+    @Override
+    public void mouseMoved(int x, int y) {
+        bPlaying.setMouseOver(false);
+        if (bPlaying.getBounds().contains(x, y)) {
+            bPlaying.setMouseOver(true);
+        } 
+    }
+
+    @Override
+    public void mousePressed(int x, int y) {
+        if (bPlaying.getBounds().contains(x, y)) {
+            bPlaying.setMousePressed(true);
+        } 
+    }
+
+    @Override
+    public void mouseReleased(int x, int y) {
+        resetButtons();
+
+    }
+
+    public void resetButtons() {
+        bPlaying.resetBooleans();
+
     }
 }
