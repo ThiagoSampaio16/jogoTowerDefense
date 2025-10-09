@@ -23,7 +23,7 @@ public class TileManager {
         int id = 0;
         tiles.add(GRASS = new Tile(getSprite(9, 2),id++,"grass"));
         tiles.add(WATER = new Tile(getSprite(6, 2),id++,"water"));
-        tiles.add(ROAD1 = new Tile(getSprite(8, 0),id++,"road1"));
+        tiles.add(ROAD1 = new Tile(getSprite(9, 1),id++,"road1"));
         tiles.add(ROAD2 = new Tile(getSprite(9, 0),id++,"road2"));
         //PRECISO DESCOBRIR AS VERDADEIRAS POSSIÇÕES DOS SPRITES NO ATLAS
     }
