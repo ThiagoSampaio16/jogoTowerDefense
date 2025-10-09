@@ -3,10 +3,8 @@ package main.java;
 
 import javax.swing.JFrame;
 
-import inputs.MyMouseListener;
 
 
-import inputs.KeyboardListner;
 import scenes.Menu;
 import scenes.Playing;
 import scenes.Settings;

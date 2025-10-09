@@ -6,8 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-
 import java.util.Scanner;
+import java.util.ArrayList;
 
 
 import javax.imageio.ImageIO;
@@ -104,23 +104,47 @@ public class LoadSave {
     }
 }
 
-public static void ReadFromFile() {
-    File txtfile = new File("src/main/resources/testTextFile.txt");
+public static void SaveLevel(String name, int[][] idArr){
+    File levelFile = new File("src/main/resources/"+name+".txt");
 
-    if (!txtfile.exists()) {
-        System.out.println("Arquivo não encontrado.");
+    if(levelFile.exists()){
+        WriteToFile(levelFile, Utilz.TwoDtolDintArr(idArr));
+    } else {
+        System.out.println("Arquivo " + name + " não existe.");
         return;
     }
 
-    try (Scanner sc = new Scanner(txtfile)) {
-        while (sc.hasNextLine()) {
-            String line = sc.nextLine();
-            System.out.println(line);
+}
+
+private static ArrayList<Integer> ReadFromFile(File file) {
+    ArrayList<Integer> list = new ArrayList<>(); 
+
+    try{
+        Scanner sc = new Scanner(file);
+        while (sc.hasNextLine()){
+            list.add(Integer.parseInt(sc.nextLine()));
         }
-    } catch (FileNotFoundException e) {
+        sc.close();
+    } catch(FileNotFoundException e){
         e.printStackTrace();
     }
+    return list;
 }
+
+public static int[][] GetLevelData(String name){
+    File lvlFile = new File("src/main/resources/" + name + ".txt");
+    if(lvlFile.exists()){
+        ArrayList<Integer> list = ReadFromFile(lvlFile);
+        return Utilz.ArrayListTo2Dint(list, 20, 20);
+
+    } else {
+        System.out.println("Arquivo " + name + " não existe.");
+        return null;
+    }
+
+
+}
+
 
     
 
