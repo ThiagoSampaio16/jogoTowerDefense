@@ -1,8 +1,10 @@
 package main.java;
 
+
 import javax.swing.JFrame;
 
 import inputs.MyMouseListener;
+
 
 import inputs.KeyboardListner;
 import scenes.Menu;
@@ -22,9 +24,7 @@ public class Jogo extends JFrame implements Runnable {
 
     private Thread gamThread;
 
-    private MyMouseListener myMouseListener;
-    private KeyboardListner keyboardListner;
-
+    
     
     //Classes
     private Render render;
@@ -34,11 +34,11 @@ public class Jogo extends JFrame implements Runnable {
 
     public Jogo() {
 
-        initClasses();
-
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setResizable(false);
+
+        initClasses();
+        
         add(telaJogo);
         pack();
 
@@ -56,17 +56,7 @@ public class Jogo extends JFrame implements Runnable {
         settings = new Settings(this);
     }
 
-    private void initInputs() {
-        myMouseListener = new MyMouseListener();
-        keyboardListner = new KeyboardListner();
-        
-        this.addMouseListener(myMouseListener);
-        this.addMouseMotionListener(myMouseListener);
-        this.addKeyListener(keyboardListner);
-
-        requestFocus(); // <- Muito importante para o KeyListener funcionar!
-        
-    }
+    
 
     private void start() {
         gamThread = new Thread(this);
@@ -94,7 +84,7 @@ public class Jogo extends JFrame implements Runnable {
 
     public static void main(String[] args) {
         Jogo jogo = new Jogo();
-        jogo.initInputs();
+        jogo.telaJogo.initInputs();
         jogo.start();
 }
 

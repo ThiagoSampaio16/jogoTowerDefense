@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import main.java.Jogo;
+import ui.MyButton;
 
 public class Menu extends GameScene implements SceneMethods{
 
@@ -18,21 +19,28 @@ public class Menu extends GameScene implements SceneMethods{
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
     private Random random;
 
+    private MyButton bPlaying, bSettings, bQuit;
+
     public Menu(Jogo jogo) {
         super(jogo);
         random = new Random();
         importImg();
         loadSprites();
+        initButtons();
+    }
+
+    private void initButtons() {
+        bPlaying = new MyButton("Play", 300, 150, 200, 50);
     }
 
     @Override
     public void render(Graphics g) {
-            for (int y = 0; y < 20; y++) {
-                for (int x = 0; x < 20; x++) {
-                        g.drawImage(sprites.get(getRndInt()), x * 32, y * 32, null);
-                }
-            }
+            drawButtons(g);
     }
+
+    private void drawButtons(Graphics g) {
+        bPlaying.draw(g);
+        }
 
         private void importImg() {
         try {
