@@ -6,21 +6,32 @@ import java.awt.Graphics;
 
 import helpz.LevelBuild;
 import managers.TileManager;
+import ui.BottomBar;
+import ui.MyButton;
+import static main.java.GameStates.*;
 
 
 public class Playing extends GameScene implements SceneMethods{
 
     private int[][] lvl;
     private TileManager tileManager;
+    
+
+    private BottomBar bottomBar;
 
     public Playing(Jogo jogo) {
         super(jogo);
 
+        
+
         lvl = LevelBuild.getLevelData();
         tileManager = new TileManager();
+        bottomBar = new BottomBar(0, 640, 640, 100, this);
 
         //Level
     }
+
+    
 
     @Override
     public void render(Graphics g) {
@@ -30,24 +41,48 @@ public class Playing extends GameScene implements SceneMethods{
                 g.drawImage(tileManager.getSprite(id), x*32, y*32, null);
             }
         }
+        
+        bottomBar.draw(g);
+    }
+
+    public TileManager getTileManager() {
+        return tileManager;
     }
 
     @Override
     public void mouseClicked(int x, int y) {
+        if(y >= 640){
+            bottomBar.mouseClicked(x, y);
+        }
     }
 
     @Override
     public void mouseMoved(int x, int y) {
-        
+        if(y >= 640){
+            bottomBar.mouseMoved(x, y);
+        }
     }
 
     @Override
     public void mousePressed(int x, int y) {
-        
+        if(y >= 640){
+            bottomBar.mousePressed(x, y);
+        }
     }
 
     @Override
     public void mouseReleased(int x, int y) {
+        
+            bottomBar.mouseReleased(x, y);
+       
+        
+    }
+
+    @Override
+    public void mouseDragged(int x, int y) {
+        if(y >= 640){
+            bottomBar.mouseDragged(x, y);
+        }
         
     }
 
