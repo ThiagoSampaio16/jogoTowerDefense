@@ -18,8 +18,6 @@ public class Jogo extends JFrame implements Runnable {
     private final double UPS_SET = 60.0;
     
     
-    private int updates;
-    private long lastTimeUPS;
 
     private Thread gamThread;
 
