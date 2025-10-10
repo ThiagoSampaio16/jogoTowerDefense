@@ -30,6 +30,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                 case SETTINGS:
                     jogo.getSettings().mouseClicked(e.getX(), e.getY());
                     break;
+                case EDIT:
+                    jogo.getEditor().mouseClicked(e.getX(), e.getY());
+                    break;
                 default:
                     break;
             }
@@ -54,6 +57,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                 case SETTINGS:
                     jogo.getSettings().mousePressed(e.getX(),e.getY());
                     break;
+                case EDIT:
+                    jogo.getEditor().mousePressed(e.getX(), e.getY());
+                    break;
                 default:
                     break;
             }
@@ -72,6 +78,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                     break;
                 case SETTINGS:
                     jogo.getSettings().mouseReleased(e.getX(),e.getY());
+                    break;
+                case EDIT:
+                    jogo.getEditor().mouseReleased(e.getX(), e.getY());
                     break;
                 default:
                     break;
@@ -101,6 +110,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                 case SETTINGS:
                     jogo.getSettings().mouseDragged(e.getX(), e.getY());
                     break;
+                case EDIT:
+                    jogo.getEditor().mouseDragged(e.getX(), e.getY());
+                    break;
                 default:
                     break;
             }
@@ -118,6 +130,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                     break;
                 case SETTINGS:
                     jogo.getSettings().mouseMoved(e.getX(), e.getY());
+                    break;
+                case EDIT:
+                    jogo.getEditor().mouseMoved(e.getX(), e.getY());
                     break;
                 default:
                     break;

@@ -29,6 +29,11 @@ public class Render {
                 jogo.getSettings().render(g);
                 
                 break;
+            case EDIT:
+                jogo.getEditor().render(g);
+                break;
+            default:
+                break;
         }
     }
 

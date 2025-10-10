@@ -3,11 +3,12 @@ package main.java;
 
 import javax.swing.JFrame;
 
-
-
+import helpz.LoadSave;
+import managers.TileManager;
 import scenes.Menu;
 import scenes.Playing;
 import scenes.Settings;
+import scenes.Editing;
 
 public class Jogo extends JFrame implements Runnable {
 
@@ -29,13 +30,18 @@ public class Jogo extends JFrame implements Runnable {
     private Menu menu;
     private Playing playing;
     private Settings settings;
+    private Editing editing;
 
+    private TileManager tileManager;
     public Jogo() {
+
+        initClasses();
+        createDefaultLevel();
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        initClasses();
+        
         
         add(telaJogo);
         pack();
@@ -45,13 +51,26 @@ public class Jogo extends JFrame implements Runnable {
  
         setVisible(true); // <- mover para o final!
     }
+
+    private void createDefaultLevel() {
+        int[] arr = new int[400];
+        for(int i = 0; i < arr.length; i++){
+            
+                arr[i] = 0;
+            
+        }
+        LoadSave.CreateLevel("new_level", arr);
+    }
+
     private void initClasses(){
 
+        tileManager = new TileManager();
         render = new Render(this);
         telaJogo = new TelaJogo(this);
         menu = new Menu(this);
         playing = new Playing(this);
         settings = new Settings(this);
+        editing = new Editing(this);
     }
 
     
@@ -141,5 +160,11 @@ public class Jogo extends JFrame implements Runnable {
     
     public Settings getSettings(){
         return settings;
+    }
+    public Editing getEditor(){
+        return editing;
+    }
+    public TileManager getTileManager(){
+        return tileManager;
     }
 }

@@ -2,16 +2,15 @@ package main.java;
 
 public enum GameStates {
 
-    PLAYING, MENU, SETTINGS;
+    PLAYING, MENU, SETTINGS, EDIT;
 
     public static GameStates gameState = MENU;
 
-    public static  void  SetGameState(GameStates state){ {
+    public static  void  SetGameState(GameStates state){ 
         gameState = state;
-
         
 
-    }
+    
 
 }
 }

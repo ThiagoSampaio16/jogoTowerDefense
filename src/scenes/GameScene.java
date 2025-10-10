@@ -4,7 +4,7 @@ import main.java.Jogo;
 
 public class GameScene {
 
-    private Jogo jogo;
+    protected Jogo jogo;
 
     public GameScene(Jogo jogo) {
         this.jogo = jogo;
