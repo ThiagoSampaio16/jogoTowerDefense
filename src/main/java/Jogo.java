@@ -85,16 +85,29 @@ public class Jogo extends JFrame implements Runnable {
 
 
 
-    private void callUPS() {
-        if (System.currentTimeMillis() - lastTimeUPS >= 1000) {
-            System.out.println("UPS: "+updates);
-            updates = 0;
-            lastTimeUPS = System.currentTimeMillis();
-        }
-        
-    }
+    
 
     private void updateGame() {
+        switch (GameStates.gameState) {
+            case EDIT:
+                
+                break;
+
+            case MENU:
+                
+                break;
+
+            case PLAYING:
+                playing.update();
+                break;
+
+            case SETTINGS:
+                
+                break;
+        
+            default:
+                break;
+        }
         
         //System.out.println("Game Updated");
     }

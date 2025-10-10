@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import helpz.LoadSave;
 import objects.Tile;
+import static helpz.Constants.Tiles.*;
 
 public class TileManager {
 

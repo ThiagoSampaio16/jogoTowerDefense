@@ -1,6 +1,8 @@
 package scenes;
 
 import main.java.Jogo;
+import managers.EnemyManager;
+import managers.TowerManager;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -14,6 +16,8 @@ public class Playing extends GameScene implements SceneMethods{
     private int[][] lvl;
     private ActionBar bottomBar;
     private int mouseX, mouseY;
+    private EnemyManager enemyManager;
+    private TowerManager towerManager;
 
     public Playing(Jogo jogo) {
 
@@ -23,6 +27,10 @@ public class Playing extends GameScene implements SceneMethods{
         loadDefaultLevel();
 
         bottomBar = new ActionBar(0, 640, 640, 100, this);
+
+        enemyManager = new EnemyManager(this);
+
+        towerManager = new TowerManager(this);
         
 
     }
@@ -38,10 +46,17 @@ public class Playing extends GameScene implements SceneMethods{
         this.lvl = lvl;
     }
 
+    public void update(){
+        enemyManager.update();
+        towerManager.update();
+    }
+
     @Override
     public void render(Graphics g) {
         drawLevel(g);
         bottomBar.draw(g);
+        enemyManager.draw(g);
+        towerManager.draw(g);
     }
 
     private void drawLevel(Graphics g){
@@ -61,6 +76,8 @@ public class Playing extends GameScene implements SceneMethods{
     public void mouseClicked(int x, int y) {
         if(y >= 640){
             bottomBar.mouseClicked(x, y);
+        }else{
+            enemyManager.addEnemy(x, y);
         }
     }
 
