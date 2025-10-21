@@ -11,6 +11,13 @@ public class TileManager {
     public BufferedImage atlas;
     public ArrayList<Tile> tiles = new ArrayList<>();
 
+    public ArrayList<Tile> road1 = new ArrayList<>();
+    public ArrayList<Tile> road2 = new ArrayList<>();
+    public ArrayList<Tile> roadcurved1 = new ArrayList<>();
+    public ArrayList<Tile> roadcurved2 = new ArrayList<>();
+    public ArrayList<Tile> roadcurved3 = new ArrayList<>();
+    public ArrayList<Tile> roadcurved4 = new ArrayList<>();
+
     public TileManager() {
 
         loadAtlas();
@@ -23,12 +30,19 @@ public class TileManager {
         int id = 0;
         tiles.add(GRASS = new Tile(getSprite(9, 2),id++,"grass"));
         tiles.add(WATER = new Tile(getSprite(6, 2),id++,"water"));
-        tiles.add(ROAD1 = new Tile(getSprite(9, 1),id++,"road1"));
-        tiles.add(ROAD2 = new Tile(getSprite(9, 0),id++,"road2"));
-        tiles.add(ROADCURVED1 = new Tile(getSprite(7, 1),id++,"roadCurved1"));
-        tiles.add(ROADCURVED2 = new Tile(getSprite(8, 1),id++,"roadCurved2"));
-        tiles.add(ROADCURVED3 = new Tile(getSprite(8, 2),id++,"roadCurved3"));
-        tiles.add(ROADCURVED4 = new Tile(getSprite(7, 2),id++,"roadCurved4"));
+        road1.add(ROAD1 = new Tile(getSprite(9, 1),id++,"road1"));
+        road2.add(ROAD2 = new Tile(getSprite(9, 0),id++,"road2"));
+        roadcurved1.add(ROADCURVED1 = new Tile(getSprite(7, 1),id++,"roadCurved1"));
+        roadcurved2.add(ROADCURVED2 = new Tile(getSprite(8, 1),id++,"roadCurved2"));
+        roadcurved3.add(ROADCURVED3 = new Tile(getSprite(8, 2),id++,"roadCurved3"));
+        roadcurved4.add(ROADCURVED4 = new Tile(getSprite(7, 2),id++,"roadCurved4"));
+
+        tiles.addAll(road1);
+        tiles.addAll(road2);
+        tiles.addAll(roadcurved1);
+        tiles.addAll(roadcurved2);
+        tiles.addAll(roadcurved3);
+        tiles.addAll(roadcurved4);
     }
 
     private void loadAtlas(){
@@ -47,4 +61,29 @@ public class TileManager {
     private BufferedImage getSprite(int xCord, int yCord){
         return atlas.getSubimage(xCord*32, yCord*32, 32, 32);    
     }
+
+    public ArrayList<Tile> getRoad1() {
+        return road1;
+    }
+
+    public ArrayList<Tile> getRoad2() {
+        return road2;
+    }
+
+    public ArrayList<Tile> getRoadcurved1() {
+        return roadcurved1;
+    }
+
+    public ArrayList<Tile> getRoadcurved2() {
+        return roadcurved2;
+    }
+
+    public ArrayList<Tile> getRoadcurved3() {
+        return roadcurved3;
+    }
+
+    public ArrayList<Tile> getRoadcurved4() {
+        return roadcurved4;
+    }
 }
+
