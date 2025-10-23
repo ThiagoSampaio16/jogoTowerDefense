@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import helpz.LoadSave;
 import objects.Tile;
+import static helpz.Constants.Tiles.*;
 
 public class TileManager {
 
@@ -28,14 +29,14 @@ public class TileManager {
     private void createTiles(){
 
         int id = 0;
-        tiles.add(GRASS = new Tile(getSprite(9, 2),id++,"grass"));
-        tiles.add(WATER = new Tile(getSprite(6, 2),id++,"water"));
-        road1.add(ROAD1 = new Tile(getSprite(9, 1),id++,"road1"));
-        road2.add(ROAD2 = new Tile(getSprite(9, 0),id++,"road2"));
-        roadcurved1.add(ROADCURVED1 = new Tile(getSprite(7, 1),id++,"roadCurved1"));
-        roadcurved2.add(ROADCURVED2 = new Tile(getSprite(8, 1),id++,"roadCurved2"));
-        roadcurved3.add(ROADCURVED3 = new Tile(getSprite(8, 2),id++,"roadCurved3"));
-        roadcurved4.add(ROADCURVED4 = new Tile(getSprite(7, 2),id++,"roadCurved4"));
+        tiles.add(GRASS = new Tile(getSprite(9, 2),id++, GRASS_TILE));
+        tiles.add(WATER = new Tile(getSprite(6, 2),id++, WATER_TILE));
+        road1.add(ROAD1 = new Tile(getSprite(9, 1),id++, ROADS_TILE));
+        road2.add(ROAD2 = new Tile(getSprite(9, 0),id++, ROADS_TILE));
+        roadcurved1.add(ROADCURVED1 = new Tile(getSprite(7, 1),id++, ROADS_TILE));
+        roadcurved2.add(ROADCURVED2 = new Tile(getSprite(8, 1),id++, ROADS_TILE));
+        roadcurved3.add(ROADCURVED3 = new Tile(getSprite(8, 2),id++, ROADS_TILE));
+        roadcurved4.add(ROADCURVED4 = new Tile(getSprite(7, 2),id++, ROADS_TILE));
 
         tiles.addAll(road1);
         tiles.addAll(road2);

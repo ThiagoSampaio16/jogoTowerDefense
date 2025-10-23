@@ -22,14 +22,29 @@ public class Enemy {
         lastDir = RIGHT; 
     }
 
-    public void move(float dx, float dy){ // Renomeei para dx, dy (Delta X, Delta Y) para clareza
-    this.x += dx; // Adiciona o deslocamento X à posição atual X
-    this.y += dy; // Adiciona o deslocamento Y à posição atual Y
-    
-    // Opcional, mas recomendado: Atualize também o Rectangle bounds
-    this.bounds.x = (int)this.x;
-    this.bounds.y = (int)this.y;
-}
+    public void move(float speed, int dir){
+        lastDir = dir;
+        switch(dir){
+            case LEFT:
+                this.x -= speed;
+                break;
+            case UP:
+                this.y -= speed;
+                break;
+            case RIGHT:
+                this.x += speed;
+                break;
+            case DOWN:
+                this.y += speed;
+                break;            
+        }
+    }
+
+    public void setPos(int x, int y){
+        //Não usar para mover o inimigo, apenas concertar a posição
+        this.x = x;
+        this.y = y;
+    }
 
 
     public float getX() {

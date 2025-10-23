@@ -25,7 +25,7 @@ public class Constants {
     public static class Tiles{
     public static final int WATER_TILE = 0;
     public static final int GRASS_TILE = 1;
-    public static final int ROAS_TILE = 2;
+    public static final int ROADS_TILE = 2;
     }
 
 }

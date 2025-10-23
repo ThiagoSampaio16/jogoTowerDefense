@@ -6,8 +6,10 @@ import java.util.ArrayList;
 
 import enemies.Enemy;
 import helpz.LoadSave;
+import main.java.Jogo;
 import scenes.Playing;
 import static helpz.Constants.Direction.*;
+import static helpz.Constants.Tiles.*;
 
 public class EnemyManager  {
 
@@ -39,40 +41,111 @@ public void update(){
         // 1. Você tem a lógica de verificação (isNextTileRoad)
         if(isNextTileRoad(e)){
             // 2. Você precisa das velocidades baseadas na direção
-            float xSpeed = getSpeedX(e.getLastDir());
-            float ySpeed = getSpeedY(e.getLastDir());
+            float xSpeed = getSpeedandWidht(e.getLastDir());
+            float ySpeed = getSpeedandHeight(e.getLastDir());
 
-            // 3. Chame o método move com a velocidade calculada
-            e.move(xSpeed, ySpeed); // <--- ESTA É A LINHA QUE FALTAVA
+
         }
     } 
 }
 
     private boolean isNextTileRoad(Enemy e) {
-        int newX = (int)(e.getX() + getSpeedX(e.getLastDir()));
-        int newY = (int)(e.getY() + getSpeedY(e.getLastDir()));
+        int newX = (int)(e.getX() + getSpeedandWidht(e.getLastDir()));
+        int newY = (int)(e.getY() + getSpeedandHeight(e.getLastDir()));
+
+        if(getTileType(newX, newY) == ROADS_TILE){
+            //Continuar na mesma direção
+            e.move(speed, e.getLastDir());
+        }else if(isAtEnd(e)){
+            //Chegou ao fim do caminho 
+        }else{
+            setNewDirectionAndMove(e);
+        }
 
         
 
-        return true;
+        return false;
         
     }
 
-    private float getSpeedY(int dir) {
+    private void setNewDirectionAndMove(Enemy e) {
+        int dir = e.getLastDir();
+
+        int xCord = (int)(e.getX() / 32);
+        int yCord = (int)(e.getY() / 32);
+
+        fixEnemyoffsetTile(e, dir, xCord, yCord);
+
+        if(dir == LEFT || dir == RIGHT){
+            //Tentar cima e baixo
+            int newY = (int)(e.getY() + getSpeedandHeight(UP));
+            if(getTileType((int)e.getX(), newY) == ROADS_TILE){
+                e.move(speed, UP);
+            }else{
+                e.move(speed, DOWN);
+            }
+            
+        //Tentar todas as direções possíveis exceto a última
+        } else{
+            int newX = (int)(e.getX() + getSpeedandWidht(RIGHT));
+            if(getTileType(newX, (int)e.getY()) == ROADS_TILE){
+                e.move(speed, RIGHT);
+            }else{
+                e.move(speed, LEFT);
+            }
+        }
+            
+    }
+
+    private void fixEnemyoffsetTile(Enemy e, int dir, int xCord, int yCord) {
+        switch(dir){
+//            case LEFT:
+//                if(xCord > 0){
+//                    xCord--;
+//                }
+//                break;
+//            case UP:
+//                if(yCord > 0){
+//                    yCord--;
+//                }
+//                break;
+            case RIGHT:
+                if(xCord < 19){
+                    xCord++;
+                }
+                break;
+            case DOWN:
+                if(yCord < 19){
+                    yCord++;
+                }
+                break;
+        }
+
+        e.setPos(xCord * 32, yCord * 32);
+    }
+
+    private boolean isAtEnd(Enemy e) {
+        return false;
+    }
+
+    private int getTileType(int x, int y){
+        return playing.getTileType(x, y);
+}
+    private float getSpeedandHeight(int dir) {
         if (dir == UP){
             return -speed;
         }else if (dir == DOWN){
-            return speed;
+            return speed + 32;
         }
 
         return 0;
     }
 
-    private float getSpeedX(int dir) {
+    private float getSpeedandWidht(int dir) {
         if (dir == LEFT){
             return -speed;
         }else if (dir == RIGHT){
-            return speed;
+            return speed + 32;
         }
 
         return 0;
