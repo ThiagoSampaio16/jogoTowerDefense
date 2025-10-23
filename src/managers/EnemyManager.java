@@ -5,11 +5,16 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import enemies.Enemy;
+import enemies.SlimeRoxa;
+import enemies.SlimeAzul;
+import enemies.SlimeVerde;
+import enemies.TodasSlimesJuntas;
 import helpz.LoadSave;
-import main.java.Jogo;
+import objects.PathPoint;
 import scenes.Playing;
 import static helpz.Constants.Direction.*;
 import static helpz.Constants.Tiles.*;
+import static helpz.Constants.Enemies.*;
 
 public class EnemyManager  {
 
@@ -17,39 +22,44 @@ public class EnemyManager  {
     private BufferedImage[] enemyImgs;
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private float speed = 0.5f;
+    private PathPoint start, end;
 
-    public EnemyManager(Playing playing){
+    public EnemyManager(Playing playing, PathPoint start, PathPoint end) {
         this.playing=playing;
         enemyImgs = new BufferedImage[4];
-        addEnemy(3 * 32,9 * 32);
+        this.start = start;
+        this.end = end;
+        addEnemy(SLIME_AZUL);
+        addEnemy(SLIME_ROXO);
+        addEnemy(SLIME_VERDE);
+        addEnemy(TODAS_SLIMES_JUNTAS);
+
+
         loadEnemyImgs();
 
     }
 
     private void loadEnemyImgs() {
-        BufferedImage atlas = LoadSave.getSpriteAtlas(); 
-       enemyImgs[0]=atlas.getSubimage(0,0,32,32); 
-       enemyImgs[1]=atlas.getSubimage(32,0,32,32);
-       enemyImgs[2]=atlas.getSubimage(2 * 32,0,32,32);
-       enemyImgs[3]=atlas.getSubimage(3 * 32,0,32,32);
+        BufferedImage atlas = LoadSave.getSpriteAtlas();
+
+       for(int i = 0; i < 4; i++){
+            enemyImgs[i]=atlas.getSubimage(i * 32,0,32,32);
+       }
     }
 
     // Arquivo: managers/EnemyManager.java
 
 public void update(){
     for (Enemy e : enemies){
-        // 1. Você tem a lógica de verificação (isNextTileRoad)
-        if(isNextTileRoad(e)){
-            // 2. Você precisa das velocidades baseadas na direção
-            float xSpeed = getSpeedandWidht(e.getLastDir());
-            float ySpeed = getSpeedandHeight(e.getLastDir());
-
-
-        }
+        updateEnemyMove(e);
     } 
 }
 
-    private boolean isNextTileRoad(Enemy e) {
+    private void updateEnemyMove(Enemy e) {
+        if(e.getLastDir() == -1){
+            setNewDirectionAndMove(e);
+        }
+
         int newX = (int)(e.getX() + getSpeedandWidht(e.getLastDir()));
         int newY = (int)(e.getY() + getSpeedandHeight(e.getLastDir()));
 
@@ -58,13 +68,10 @@ public void update(){
             e.move(speed, e.getLastDir());
         }else if(isAtEnd(e)){
             //Chegou ao fim do caminho 
+            System.out.println("Vida Perdida!");
         }else{
             setNewDirectionAndMove(e);
         }
-
-        
-
-        return false;
         
     }
 
@@ -75,6 +82,10 @@ public void update(){
         int yCord = (int)(e.getY() / 32);
 
         fixEnemyoffsetTile(e, dir, xCord, yCord);
+
+        if(isAtEnd(e)){
+            return;
+        }
 
         if(dir == LEFT || dir == RIGHT){
             //Tentar cima e baixo
@@ -99,16 +110,6 @@ public void update(){
 
     private void fixEnemyoffsetTile(Enemy e, int dir, int xCord, int yCord) {
         switch(dir){
-//            case LEFT:
-//                if(xCord > 0){
-//                    xCord--;
-//                }
-//                break;
-//            case UP:
-//                if(yCord > 0){
-//                    yCord--;
-//                }
-//                break;
             case RIGHT:
                 if(xCord < 19){
                     xCord++;
@@ -125,6 +126,11 @@ public void update(){
     }
 
     private boolean isAtEnd(Enemy e) {
+        if(e.getX() == end.getxCord() * 32){
+            if(e.getY() == end.getyCord() * 32){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -151,8 +157,25 @@ public void update(){
         return 0;
     }
 
-    public void addEnemy(int x, int y){
-        enemies.add(new Enemy(x,y,0,0));
+    public void addEnemy(int EnemyType){
+        int x = start.getxCord() * 32;
+        int y = start.getyCord() * 32;
+        
+        switch (EnemyType) {
+            case SLIME_AZUL:
+                enemies.add(new SlimeAzul(x,y,0));
+                break;
+            case SLIME_ROXO:
+                enemies.add(new SlimeRoxa(x,y,0));
+                break;
+            case SLIME_VERDE:
+                enemies.add(new SlimeVerde(x,y,0));
+                break;
+            case TODAS_SLIMES_JUNTAS:
+                enemies.add(new TodasSlimesJuntas(x,y,0));
+                break;
+        }
+        
     }
 
     public void draw(Graphics g){
@@ -165,7 +188,7 @@ public void update(){
     }
 
     private void drawEnemy(Enemy e, Graphics g){
-        g.drawImage(enemyImgs[0], (int)e.getX(), (int)e.getY(), null);
+        g.drawImage(enemyImgs[e.getEnemyType()], (int)e.getX(), (int)e.getY(), null);
 
     }
 

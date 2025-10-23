@@ -1,10 +1,15 @@
 package scenes;
 
 import main.java.Jogo;
+import objects.PathPoint;
 import objects.Tile;
+
+import static helpz.Constants.Tiles.ROADS_TILE;
+
 import java.awt.Graphics;
 import ui.ToolBar;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import helpz.LoadSave;
 
@@ -18,16 +23,19 @@ public class Editing extends GameScene implements SceneMethods {
     private int lastTileX, lastTileY, lastTileId;
     private boolean drawSelect;
     private ToolBar toolbar;
+    private PathPoint start, end;
     
     public Editing(Jogo jogo){
         super(jogo);
         loadDefaultLevel();
-        toolbar = new ToolBar(0, 640, 640, 100, this);
+        toolbar = new ToolBar(0, 640, 640, 160, this);
     }
 
     private void loadDefaultLevel() {
         lvl = LoadSave.GetLevelData("new_level");
-        
+        ArrayList<PathPoint> points = LoadSave.GetLevelPathPoints("new_level");
+        start = points.get(0);
+        end = points.get(1);
     }
 
     @Override
@@ -36,6 +44,18 @@ public class Editing extends GameScene implements SceneMethods {
         drawLevel(g);
         toolbar.draw(g);
         drawSelectedTile(g);
+        drawPathPoints(g);
+    }
+
+    private void drawPathPoints(Graphics g) {
+        if(start != null){
+            g.drawImage(toolbar.getStartPathImg(), start.getxCord() * 32, start.getyCord() * 32, 32, 32, null);
+        }
+
+        if(end != null){
+            g.drawImage(toolbar.getEndPathImg(), end.getxCord() * 32, end.getyCord() * 32, 32, 32, null);
+        }
+
     }
 
     private void drawLevel(Graphics g){
@@ -59,7 +79,7 @@ public class Editing extends GameScene implements SceneMethods {
 
     public void saveLevel() {
 
-        LoadSave.SaveLevel("new_level", lvl);
+        LoadSave.SaveLevel("new_level", lvl, start, end);
         jogo.getPlaying().setLevel(lvl);
 
     }
@@ -75,15 +95,30 @@ public class Editing extends GameScene implements SceneMethods {
             int tileX = x / 32;
             int tileY = y / 32;
 
-            if(lastTileX == tileX && lastTileY == tileY && lastTileId == selectedTile.getId()){
-                return;
-            }
-            lastTileX = tileX;
-            lastTileY = tileY;
+            if(selectedTile.getId() >= 0){
+                
 
-            lvl[tileY][tileX] = selectedTile.getId();
+                if(lastTileX == tileX && lastTileY == tileY && lastTileId == selectedTile.getId()){
+                    return;
+                }
+                lastTileX = tileX;
+                lastTileY = tileY;
+
+                lvl[tileY][tileX] = selectedTile.getId();
+            }else{
+            int id = lvl[tileY][tileX];
+                if(jogo.getTileManager().getTile(id).getTileType() == ROADS_TILE){
+                    if(selectedTile.getId() == -1){
+                        start = new PathPoint(tileX, tileY);
+                    }else{
+                        end = new PathPoint(tileX, tileY);
+                    }
+                }
+
         }
+        } 
     }
+    
 
     @Override
     public void mouseClicked(int x, int y) {

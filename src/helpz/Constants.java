@@ -17,9 +17,10 @@ public class Constants {
     }
 
     public static class Enemies {
-        public static final int AZUL = 0;
-        public static final int ROXO = 1;
-        public static final int VERDE = 3;
+        public static final int SLIME_AZUL = 0;
+        public static final int SLIME_ROXO = 1;
+        public static final int SLIME_VERDE = 2;
+        public static final int TODAS_SLIMES_JUNTAS = 3;
     }
 
     public static class Tiles{
