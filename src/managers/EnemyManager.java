@@ -21,7 +21,7 @@ public class EnemyManager  {
     private Playing playing;
     private BufferedImage[] enemyImgs;
     private ArrayList<Enemy> enemies = new ArrayList<>();
-    private float speed = 0.5f;
+    //private float speed = 0.5f;
     private PathPoint start, end;
 
     public EnemyManager(Playing playing, PathPoint start, PathPoint end) {
@@ -60,12 +60,12 @@ public void update(){
             setNewDirectionAndMove(e);
         }
 
-        int newX = (int)(e.getX() + getSpeedandWidht(e.getLastDir()));
-        int newY = (int)(e.getY() + getSpeedandHeight(e.getLastDir()));
+        int newX = (int)(e.getX() + getSpeedandWidht(e.getLastDir(), e.getEnemyType()));
+        int newY = (int)(e.getY() + getSpeedandHeight(e.getLastDir(), e.getEnemyType()));
 
         if(getTileType(newX, newY) == ROADS_TILE){
             //Continuar na mesma direção
-            e.move(speed, e.getLastDir());
+            e.move(GetSpeed(e.getEnemyType()), e.getLastDir());
         }else if(isAtEnd(e)){
             //Chegou ao fim do caminho 
             System.out.println("Vida Perdida!");
@@ -89,20 +89,20 @@ public void update(){
 
         if(dir == LEFT || dir == RIGHT){
             //Tentar cima e baixo
-            int newY = (int)(e.getY() + getSpeedandHeight(UP));
+            int newY = (int)(e.getY() + getSpeedandHeight(UP, e.getEnemyType()));
             if(getTileType((int)e.getX(), newY) == ROADS_TILE){
-                e.move(speed, UP);
+                e.move(GetSpeed(e.getEnemyType()), UP);
             }else{
-                e.move(speed, DOWN);
+                e.move(GetSpeed(e.getEnemyType()), DOWN);
             }
             
         //Tentar todas as direções possíveis exceto a última
         } else{
-            int newX = (int)(e.getX() + getSpeedandWidht(RIGHT));
+            int newX = (int)(e.getX() + getSpeedandWidht(RIGHT, e.getEnemyType()));
             if(getTileType(newX, (int)e.getY()) == ROADS_TILE){
-                e.move(speed, RIGHT);
+                e.move(GetSpeed(e.getEnemyType()), RIGHT);
             }else{
-                e.move(speed, LEFT);
+                e.move(GetSpeed(e.getEnemyType()), LEFT);
             }
         }
             
@@ -137,21 +137,21 @@ public void update(){
     private int getTileType(int x, int y){
         return playing.getTileType(x, y);
 }
-    private float getSpeedandHeight(int dir) {
+    private float getSpeedandHeight(int dir, int enemyType) {
         if (dir == UP){
-            return -speed;
+            return -GetSpeed(enemyType);
         }else if (dir == DOWN){
-            return speed + 32;
+            return GetSpeed(enemyType) + 32;
         }
 
         return 0;
     }
 
-    private float getSpeedandWidht(int dir) {
+    private float getSpeedandWidht(int dir, int enemyType) {
         if (dir == LEFT){
-            return -speed;
+            return -GetSpeed(enemyType);
         }else if (dir == RIGHT){
-            return speed + 32;
+            return GetSpeed(enemyType) + 32;
         }
 
         return 0;

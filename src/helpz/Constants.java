@@ -21,6 +21,21 @@ public class Constants {
         public static final int SLIME_ROXO = 1;
         public static final int SLIME_VERDE = 2;
         public static final int TODAS_SLIMES_JUNTAS = 3;
+
+        public static float GetSpeed(int enemyType) {
+            switch (enemyType) {
+                case SLIME_AZUL:
+                    return 0.7f;
+                case SLIME_ROXO:
+                    return 1.0f;
+                case SLIME_VERDE:
+                    return 1.3f;
+                case TODAS_SLIMES_JUNTAS:
+                    return 0.3f;
+            }
+
+            return 0;
+        }
     }
 
     public static class Tiles{
