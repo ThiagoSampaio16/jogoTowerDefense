@@ -7,6 +7,17 @@ public class Constants {
         public static final int GATO = 1;
         public static final int FOICE = 2;
         
+        public static String GetName(int towerType) {
+            switch (towerType) {
+                case ABOBORA:
+                    return "Abóbora";
+                case GATO:
+                    return "Gato";
+                case FOICE:
+                    return "Foice";
+            }
+            return "";
+        }
     }
 
     public static class Direction {

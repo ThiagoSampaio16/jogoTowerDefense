@@ -2,30 +2,25 @@ package managers;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import objects.Tower;
 import helpz.LoadSave;
 import scenes.Playing;
-
-import static helpz.Constants.Towers.*;
 
 
 public class TowerManager {
 
     private Playing playing;
     private BufferedImage[] towerImgs;
-    private Tower tower;
+    private ArrayList<Tower> towers = new ArrayList<>();
+    private int towerAmount = 0;
 
     public TowerManager(Playing playing){
 
         this.playing=playing;
 
         loadTowerImgs();
-        initTowers();
-    }
-
-    private void initTowers() {
-        tower = new Tower(3*32, 8*32, 0, ABOBORA);
     }
 
     private void loadTowerImgs() {
@@ -38,14 +33,38 @@ public class TowerManager {
 
     }
 
+    public void addTower(Tower selectedTower, int xPos, int yPos) {
+        towers.add(new Tower(xPos, yPos, towerAmount++, selectedTower.getTowerType()));
+    }
+
     public void update(){
         
     }
 
     public void draw(Graphics g){
-        g.drawImage(towerImgs[ABOBORA], tower.getX(), tower.getY(), null);
+
+        for(Tower t : towers){
+            g.drawImage(towerImgs[t.getTowerType()], t.getX(), t.getY(), null);
+        }
+        //g.drawImage(towerImgs[ABOBORA], tower.getX(), tower.getY(), null);
 
     }
 
+    public Tower getTowerAt(int x, int y) {
+        for(Tower t : towers){
+            if(t.getX() == x ){
+                if(t.getY() == y){                        
+                    return t;
+                }
+            }
+        }
+        return null;
+    }
+
+
+    public BufferedImage[] getTowerImg(){
+        return towerImgs;
+    }
+    
 
 }
