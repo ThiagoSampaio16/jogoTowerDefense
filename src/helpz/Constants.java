@@ -18,6 +18,42 @@ public class Constants {
             }
             return "";
         }
+
+        public static float GetDefaultDmg(int towerType) {
+            switch (towerType) {
+                case ABOBORA:
+                    return 35;
+                case GATO:
+                    return 52;
+                case FOICE:
+                    return 87;
+            }
+            return 0;
+        }
+
+        public static float GetDefaultRange(int towerType) {
+            switch (towerType) {
+                case ABOBORA:
+                    return 100;
+                case GATO:
+                    return 100;
+                case FOICE:
+                    return 100;
+            }
+            return 0;
+        }
+
+        public static float GetDefaultCooldown(int towerType) {
+            switch (towerType) {
+                case ABOBORA:
+                    return 10;
+                case GATO:
+                    return 10;
+                case FOICE:
+                    return 10;
+            }
+            return 0;
+        }
     }
 
     public static class Direction {
@@ -43,6 +79,21 @@ public class Constants {
                     return 1.3f;
                 case TODAS_SLIMES_JUNTAS:
                     return 0.3f;
+            }
+
+            return 0;
+        }
+
+        public static int GetStartHealth(int enemyType) {
+            switch (enemyType) {
+                case SLIME_AZUL:
+                    return 200;
+                case SLIME_ROXO:
+                    return 150;
+                case SLIME_VERDE:
+                    return 100;
+                case TODAS_SLIMES_JUNTAS:
+                    return 500;
             }
 
             return 0;

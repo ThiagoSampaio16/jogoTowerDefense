@@ -5,12 +5,13 @@ import static helpz.Constants.Direction.*;
 
 public abstract class Enemy {
 
-    private float x,y;
-    private Rectangle bounds;
-    private int health;
-    private int ID;
-    private int enemyType;
-    private int lastDir;
+    protected float x,y;
+    protected Rectangle bounds;
+    protected int health;
+    protected int maxHealth;
+    protected int ID;
+    protected int enemyType;
+    protected int lastDir;
 
     public Enemy(float x, float y, int ID, int enemyType) {
         this.x=x;
@@ -20,7 +21,13 @@ public abstract class Enemy {
 
         bounds =  new Rectangle((int)x,(int)y,32,32); 
         lastDir = -1;
+        setStartHealth();
         
+    }
+
+    protected void setStartHealth(){
+        health = helpz.Constants.Enemies.GetStartHealth(enemyType);
+        maxHealth = health;
     }
 
     public void move(float speed, int dir){
@@ -45,6 +52,10 @@ public abstract class Enemy {
         //Não usar para mover o inimigo, apenas concertar a posição
         this.x = x;
         this.y = y;
+    }
+
+    public float getHealthBarFloat(){
+        return health / (float)maxHealth;
     }
 
 

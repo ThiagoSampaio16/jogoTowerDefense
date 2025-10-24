@@ -8,7 +8,9 @@ import objects.Tower;
 
 import static helpz.Constants.Tiles.GRASS_TILE;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -72,7 +74,16 @@ public class Playing extends GameScene implements SceneMethods{
         enemyManager.draw(g);
         towerManager.draw(g);
         drawSelectedTower(g);
+        drawHighLighted(g);
     }
+
+    private void drawHighLighted(Graphics g) {
+        g.setColor(Color.white);
+        g.drawRect(mouseX, mouseY, 32, 32);
+        
+    }
+
+
 
     private void drawSelectedTower(Graphics g) {
         if(selectedTower != null){
@@ -142,6 +153,12 @@ public class Playing extends GameScene implements SceneMethods{
 
         return tileType == GRASS_TILE;
     }
+
+    public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			selectedTower = null;
+		}
+	}
 
 
 
