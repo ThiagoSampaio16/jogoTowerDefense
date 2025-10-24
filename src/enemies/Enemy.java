@@ -12,6 +12,7 @@ public abstract class Enemy {
     protected int ID;
     protected int enemyType;
     protected int lastDir;
+    protected boolean alive = true;
 
     public Enemy(float x, float y, int ID, int enemyType) {
         this.x=x;
@@ -30,6 +31,12 @@ public abstract class Enemy {
         maxHealth = health;
     }
 
+    public void hurt(int dmg){
+        this.health -= dmg;
+        if(health <= 0)
+            alive = false;
+    }
+
     public void move(float speed, int dir){
         lastDir = dir;
         switch(dir){
@@ -46,6 +53,13 @@ public abstract class Enemy {
                 this.y += speed;
                 break;            
         }
+
+        updateHitBox();
+    }
+
+    private void updateHitBox() {
+        bounds.x = (int) x;
+        bounds.y = (int) y;
     }
 
     public void setPos(int x, int y){
@@ -109,6 +123,10 @@ public abstract class Enemy {
 
     public int getLastDir(){
         return lastDir;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
     
 }

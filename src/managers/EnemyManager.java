@@ -53,7 +53,9 @@ public class EnemyManager  {
 
 public void update(){
     for (Enemy e : enemies){
-        updateEnemyMove(e);
+        if(e.isAlive()){
+            updateEnemyMove(e);
+        }
     } 
 }
 
@@ -183,8 +185,10 @@ public void update(){
     public void draw(Graphics g){
 
         for(Enemy e : enemies){
-            drawEnemy(e,g);
-            drawHealthBar(e, g);
+            if(e.isAlive()){
+                drawEnemy(e,g);
+                drawHealthBar(e, g);
+            }
         }
 
                 
@@ -203,6 +207,10 @@ public void update(){
     private void drawEnemy(Enemy e, Graphics g){
         g.drawImage(enemyImgs[e.getEnemyType()], (int)e.getX(), (int)e.getY(), null);
 
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
     }
 
 

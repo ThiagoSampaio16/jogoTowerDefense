@@ -2,6 +2,25 @@ package helpz;
 
 public class Constants {
 
+    public static class Projectiles{
+        public static final int FOGO_ABOBORA = 0;
+        public static final int BOLA_GATO = 1;
+        public static final int CORTE_FOICE = 2;
+
+        public static Float GetSpeed(int type){
+            switch(type){
+                case FOGO_ABOBORA:
+                    return 3.0f;
+                case BOLA_GATO:
+                    return 1.0f;
+                case CORTE_FOICE:
+                    return 2.0f;
+            }
+            return 0f;
+        }
+    };
+
+
     public static class Towers {
         public static final int ABOBORA = 0;
         public static final int GATO = 1;
@@ -19,7 +38,7 @@ public class Constants {
             return "";
         }
 
-        public static float GetDefaultDmg(int towerType) {
+        public static int GetDefaultDmg(int towerType) {
             switch (towerType) {
                 case ABOBORA:
                     return 35;
